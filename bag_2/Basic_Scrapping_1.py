@@ -15,5 +15,12 @@ SOUP = BeautifulSoup(CONTENT, "lxml")
 ARTICLE_H1 = SOUP.find("article", class_ ="main-article")
 
 ARTICLE_H1_TITLE = ARTICLE_H1.find("h1").get_text() # type: ignore
+
+ARTICLE_TRANSCRIPT = ARTICLE_H1.find("div", class_ = "full-script").get_text() #type: ignore
 print(ARTICLE_H1_TITLE) # type: ignore
+print("================")
+
+print(ARTICLE_TRANSCRIPT)
+
+
 
