@@ -11,7 +11,9 @@ CONTENT = RESPONSE.text
 
 SOUP = BeautifulSoup(CONTENT, "lxml")
 
-ARTICLE_H1 = SOUP.find("article", class_ ="main-article").find("h1")
+# Bisa menggunakan cara seperti ini untuk html bersarang 
+ARTICLE_H1 = SOUP.find("article", class_ ="main-article")
 
-# ARTICLE_H1_TITLE = ARTICLE_H1.find("h1").get_text()
-print(ARTICLE_H1)
+ARTICLE_H1_TITLE = ARTICLE_H1.find("h1").get_text() # type: ignore
+print(ARTICLE_H1_TITLE) # type: ignore
+
