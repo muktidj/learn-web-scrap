@@ -11,16 +11,19 @@ CONTENT = RESPONSE.text
 
 SOUP = BeautifulSoup(CONTENT, "lxml")
 
+
 # Bisa menggunakan cara seperti ini untuk html bersarang 
-ARTICLE_H1 = SOUP.find("article", class_ ="main-article")
+box = SOUP.find("article", class_ ="main-article")
 
-ARTICLE_H1_TITLE = ARTICLE_H1.find("h1").get_text() # type: ignore
+title = box.find("h1").get_text()
 
-ARTICLE_TRANSCRIPT = ARTICLE_H1.find("div", class_ = "full-script").get_text() #type: ignore
-print(ARTICLE_H1_TITLE) # type: ignore
+transcript = box.find("div", class_ = "full-script").get_text(strip=True, separator=' ') #type: ignore
+print(title) # type: ignore
 print("================")
 
-print(ARTICLE_TRANSCRIPT)
+print(transcript) # type: ignore
 
+with open(f"{title}.txt", "w") as file:
+     file.write(transcript)
 
 
