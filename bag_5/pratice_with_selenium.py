@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from time import sleep
+import pandas as pd
 
 
 driver = webdriver.Chrome()
@@ -16,21 +17,25 @@ element.click()  # Example: Click the element
 
 matches = driver.find_elements(By.TAG_NAME, "tr")
 
-data = 50
+# data = 50
 date = []
 home_team = []
 score = []
 away_team = []
 
-for match in matches[:data]:
-     date.append(match.find_element(By.XPATH, "./td[1]").text) #//tr/td[1] 
-     home_team.append(match.find_element(By.XPATH, "./td[2]").text) #//tr/td[2] 
-     # match.find_element(By.XPATH, "./td[3]") #//tr/td[3] 
-     # match.find_element(By.XPATH, "./td[4]") #//tr/td[4]
+for match in matches:
+     match_date= match.find_element(By.XPATH, "./td[1]").text #//tr/td[1] 
+     if "2023" in match_date:
+          date.append(match_date)
+          home_team.append(match.find_element(By.XPATH, "./td[2]").text) #//tr/td[2] 
+          score.append(match.find_element(By.XPATH, "./td[3]").text) #//tr/td[3] 
+          away_team.append(match.find_element(By.XPATH, "./td[4]").text) #//tr/td[4]
+   
 
-print(date)
-print(home_team)
+df = pd.DataFrame({"date": date, "home_team": home_team, "score": score, "away_team": away_team})
+df.to_csv("football_data_csv", index=False)
 
+print(df)
 sleep(10000)
 
 driver.quit()
