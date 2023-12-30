@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 from time import sleep
 import pandas as pd
 
@@ -15,9 +16,17 @@ element = driver.find_element(By.XPATH, "//label[@analytics-event='All matches']
 # Perform actions on the found element (e.g., click, get text, etc.)
 element.click()  # Example: Click the element
 
+
+dropdwon_element = Select(driver.find_element(by='id', value='country'))
+
+dropdwon_element.select_by_visible_text('Italy')
+sleep(3)
+
+
+
 matches = driver.find_elements(By.TAG_NAME, "tr")
 
-# data = 50
+
 date = []
 home_team = []
 score = []
@@ -33,10 +42,11 @@ for match in matches:
    
 
 df = pd.DataFrame({"date": date, "home_team": home_team, "score": score, "away_team": away_team})
-df.to_csv("football_data_csv", index=False)
+df.to_csv("football_italy_data_csv.csv", index=False)
+
 
 print(df)
-sleep(10000)
+
 
 driver.quit()
 
