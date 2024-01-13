@@ -1,11 +1,15 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 # from selenium.webdriver.support.select import Select
 from time import sleep
 import pandas as pd
 
+options = Options()
+options.headless = True # type: ignore
+options.add_argument("--headless")
 
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(options=options)
 driver.get("https://www.audible.com/search")
 
 
@@ -27,11 +31,10 @@ for product in LI_ELEMENT[:data]:
 
 
 df = pd.DataFrame({"Book Title": book_title, "Book Author": book_author, "Duration": book_length})
-df.to_csv("book_csv.csv", index=False)
+# df.to_csv("book_csv.csv", index=False)
      
 
 
 print(df)
 
-sleep(1000)
 driver.quit()
